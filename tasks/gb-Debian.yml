@@ -1,0 +1,13 @@
+ - name: "Updating the system ...."
+   apt:
+      name: "*"
+      state: latest
+   tags:
+    - system
+
+ - name: "Installing git repository ....."
+   apt:
+      name: git
+      state: latest
+   tags:
+    - git 

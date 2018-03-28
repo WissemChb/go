@@ -1,0 +1,15 @@
+ 
+ 
+ - name: "Updating the system ...."
+   yum:
+      name: "*"
+      state: latest
+   tags:
+    - system
+
+ - name: "Installing git repository ....."
+   yum:
+      name: git
+      state: latest
+   tags:
+    - git

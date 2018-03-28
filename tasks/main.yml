@@ -1,0 +1,58 @@
+---
+# tasks file for go
+
+- name: "Download and extract Go compiler ....."
+  unarchive:
+    src: "{{ go_download_source }}"
+    dest: /usr/local
+    remote_src: yes
+    validate_certs: yes
+  become: yes
+  tags:
+    - go
+    - download
+
+
+- name: "Adding go executable to PATH variable ...."
+  copy:
+    src: ../files/path.sh
+    dest: /etc/profile.d
+  become: yes
+  tags:
+    - go
+    - path
+
+
+- name: "Adding Go variables (optional for  root) ...."
+  shell: "echo export GOBIN=$HOME/go/bin >> $HOME/.bashrc && \
+          echo export GOPATH=$HOME/go/src >> $HOME/.bashrc && \
+          echo export PATH=$PATH:$HOME/go/bin >> $HOME/.bashrc && \
+          . $HOME/.bashrc"
+  changed_when: false
+  tags:
+    - go
+    - config
+ 
+
+- name: "Installing gb  prerequesite in RedHat Systems ...."
+  include_tasks: gb-RedHat.yml
+  when: ansible_os_family == "RedHat"
+  become: yes
+  tags:
+    - gb
+  
+- name: "Installing gb  prerequesite in Debian Systems ...."
+  include_tasks: gb-Debian.yml
+  when: ansible_os_family == "Debian"
+  become: yes
+  tags:
+    - gb
+ 
+
+- name: "Install gb ...."
+  command: "go get github.com/constabulary/gb/..."
+  changed_when: false
+  tags:
+    - gb 
+    - install
+

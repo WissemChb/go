@@ -1,0 +1,3 @@
+---
+# defaults file for go
+version: "1.10"
