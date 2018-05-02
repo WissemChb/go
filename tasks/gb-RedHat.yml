@@ -1,15 +1,17 @@
  
  
- - name: "Updating the system ...."
-   yum:
-      name: "*"
-      state: latest
-   tags:
+- name: "Updating the system ...."
+  yum:
+    name: "*"
+    state: latest
+  become: yes
+  tags:
     - system
 
- - name: "Installing git repository ....."
-   yum:
-      name: git
-      state: latest
-   tags:
+- name: "Installing git repository ....."
+  yum:
+    name: git
+    state: latest
+  become: yes
+  tags:
     - git
